@@ -21,9 +21,9 @@ export default async function Footer() {
               </svg>
               {s.site_name || "РемонтТехники"}
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            {/* <p className="text-gray-400 text-sm leading-relaxed">
               Профессиональный ремонт бытовой техники. Работаем с 2010 года.
-            </p>
+            </p> */}
           </div>
 
           {/* Links */}

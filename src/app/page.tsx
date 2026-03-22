@@ -98,10 +98,10 @@ export default async function HomePage() {
                 <div className="text-4xl font-bold text-accent-500">14</div>
                 <div className="text-blue-200 text-sm mt-1">лет на рынке</div>
               </div>
-              <div>
+              {/* <div>
                 <div className="text-4xl font-bold text-accent-500">12</div>
                 <div className="text-blue-200 text-sm mt-1">месяцев гарантии</div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
@@ -110,7 +110,7 @@ export default async function HomePage() {
         <section id="services" className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title">Наши услуги</h2>
-            <p className="section-subtitle">Ремонтируем все виды бытовой техники ведущих производителей</p>
+            <p className="section-subtitle">Ремонтирую все виды бытовой техники ведущих производителей</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service) => (
                 <div key={service.id} className="card group">
