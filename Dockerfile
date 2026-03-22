@@ -34,6 +34,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
+# Pre-create data directory with correct permissions (for SQLite volume)
+RUN mkdir -p /data/db && chown nextjs:nodejs /data/db
+
 # Production node_modules (includes prisma CLI + tsx + @prisma/client)
 COPY --from=deps-prod /app/node_modules ./node_modules
 
