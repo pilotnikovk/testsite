@@ -1,0 +1,16 @@
+[phases.setup]
+nixPkgs = ["openssl_3"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = [
+  "npx prisma generate",
+  "npm run build",
+  "cp -r .next/static .next/standalone/.next/static",
+  "cp -r public .next/standalone/public"
+]
+
+[start]
+cmd = "sh scripts/railway-start.sh"
