@@ -16,7 +16,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
             <Image
-              src="/images/СССР-знак качества.jpg"
+              src="/images/znak-kachestva.jpg"
               alt="Знак качества"
               width={40}
               height={40}
