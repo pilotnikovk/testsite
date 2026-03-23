@@ -24,6 +24,7 @@ model Board {
   description String?
   price       Float?
   category    String
+  brand       String   @default("")
   imageUrl    String?
   inStock     Boolean  @default(true)
   createdAt   DateTime @default(now())

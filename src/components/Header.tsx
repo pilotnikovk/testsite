@@ -33,29 +33,19 @@ export default function Header() {
             <Link href="/catalog" className="hover:text-accent-400 transition-colors">Каталог плат и блоков</Link>
           </nav>
 
-          {/* Auth */}
+          {/* Auth — только для админа */}
           <div className="hidden md:flex items-center gap-3">
-            {session ? (
+            {session && (session.user as { role?: string })?.role === "ADMIN" && (
               <>
-                {(session.user as { role?: string })?.role === "ADMIN" && (
-                  <Link href="/admin" className="text-sm hover:text-accent-400 transition-colors">
-                    Админ панель
-                  </Link>
-                )}
-                <span className="text-sm text-gray-300">{session.user?.name || session.user?.email}</span>
+                <Link href="/admin" className="text-sm hover:text-accent-400 transition-colors">
+                  Админ панель
+                </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-sm bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-colors"
                 >
                   Выйти
                 </button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="text-sm hover:text-accent-400 transition-colors">Войти</Link>
-                <Link href="/register" className="text-sm bg-accent-500 hover:bg-accent-600 px-4 py-2 rounded-lg transition-colors">
-                  Регистрация
-                </Link>
               </>
             )}
           </div>
@@ -79,17 +69,10 @@ export default function Header() {
             <Link href="/#how" className="block py-2 hover:text-accent-400" onClick={() => setMenuOpen(false)}>Как работаем</Link>
             <Link href="/#contacts" className="block py-2 hover:text-accent-400" onClick={() => setMenuOpen(false)}>Контакты</Link>
             <Link href="/catalog" className="block py-2 hover:text-accent-400" onClick={() => setMenuOpen(false)}>Каталог плат</Link>
-            {session ? (
+            {session && (session.user as { role?: string })?.role === "ADMIN" && (
               <>
-                {(session.user as { role?: string })?.role === "ADMIN" && (
-                  <Link href="/admin" className="block py-2 hover:text-accent-400" onClick={() => setMenuOpen(false)}>Админ панель</Link>
-                )}
+                <Link href="/admin" className="block py-2 hover:text-accent-400" onClick={() => setMenuOpen(false)}>Админ панель</Link>
                 <button onClick={() => signOut({ callbackUrl: "/" })} className="block py-2 text-red-300">Выйти</button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="block py-2 hover:text-accent-400" onClick={() => setMenuOpen(false)}>Войти</Link>
-                <Link href="/register" className="block py-2 hover:text-accent-400" onClick={() => setMenuOpen(false)}>Регистрация</Link>
               </>
             )}
           </div>

@@ -56,14 +56,14 @@ async function main() {
   // Sample boards
   const categories = ["Телевизоры", "Стиральные машины", "Холодильники", "Микроволновки"];
   const sampleBoards = [
-    { name: "Плата питания", model: "BN44-00932A", category: "Телевизоры", price: 2500, inStock: true, description: "Блок питания для Samsung UE43, UE49, UE55" },
-    { name: "Плата питания", model: "EAX67865301", category: "Телевизоры", price: 3200, inStock: true, description: "Блок питания для LG 43UJ6307, 49UJ6307" },
-    { name: "T-CON плата", model: "6871L-5765A", category: "Телевизоры", price: 4100, inStock: false, description: "T-CON плата LG 55UK6300" },
-    { name: "Инвертор мотора", model: "DC92-01803F", category: "Стиральные машины", price: 1800, inStock: true, description: "Модуль инвертора Samsung WF-серия" },
-    { name: "Модуль управления", model: "EBR75257104", category: "Стиральные машины", price: 2900, inStock: true, description: "Модуль управления LG F-серия" },
-    { name: "Плата управления", model: "DA92-00596A", category: "Холодильники", price: 3500, inStock: true, description: "Модуль управления Samsung RB-серия" },
-    { name: "Инвертор компрессора", model: "EBR73766104", category: "Холодильники", price: 4800, inStock: false, description: "Инвертор компрессора LG GC-серия" },
-    { name: "Плата управления", model: "DE92-03885A", category: "Микроволновки", price: 1200, inStock: true, description: "Плата управления Samsung ME-серия" },
+    { name: "Плата питания", model: "BN44-00932A", brand: "Samsung", category: "Телевизоры", price: 2500, inStock: true, description: "Блок питания для Samsung UE43, UE49, UE55" },
+    { name: "Плата питания", model: "EAX67865301", brand: "LG", category: "Телевизоры", price: 3200, inStock: true, description: "Блок питания для LG 43UJ6307, 49UJ6307" },
+    { name: "T-CON плата", model: "6871L-5765A", brand: "LG", category: "Телевизоры", price: 4100, inStock: false, description: "T-CON плата LG 55UK6300" },
+    { name: "Инвертор мотора", model: "DC92-01803F", brand: "Samsung", category: "Стиральные машины", price: 1800, inStock: true, description: "Модуль инвертора Samsung WF-серия" },
+    { name: "Модуль управления", model: "EBR75257104", brand: "LG", category: "Стиральные машины", price: 2900, inStock: true, description: "Модуль управления LG F-серия" },
+    { name: "Плата управления", model: "DA92-00596A", brand: "Samsung", category: "Холодильники", price: 3500, inStock: true, description: "Модуль управления Samsung RB-серия" },
+    { name: "Инвертор компрессора", model: "EBR73766104", brand: "LG", category: "Холодильники", price: 4800, inStock: false, description: "Инвертор компрессора LG GC-серия" },
+    { name: "Плата управления", model: "DE92-03885A", brand: "Samsung", category: "Микроволновки", price: 1200, inStock: true, description: "Плата управления Samsung ME-серия" },
   ];
 
   const existingBoards = await prisma.board.count();

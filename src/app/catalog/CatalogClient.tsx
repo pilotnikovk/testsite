@@ -9,17 +9,55 @@ type Board = {
   description: string | null;
   price: number | null;
   category: string;
+  brand: string;
   imageUrl: string | null;
   inStock: boolean;
   createdAt: Date;
 };
 
+const BRANDS = [
+  { key: "Samsung", label: "Samsung", color: "from-blue-600 to-blue-800" },
+  { key: "LG", label: "LG", color: "from-red-500 to-red-700" },
+  { key: "Другие", label: "Другие", color: "from-gray-500 to-gray-700" },
+];
+
 export default function CatalogClient({ boards, categories }: { boards: Board[]; categories: string[] }) {
+  const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("Все");
   const [inStockOnly, setInStockOnly] = useState(false);
 
+  const getBrandForBoard = (b: Board) => {
+    if (b.brand === "Samsung") return "Samsung";
+    if (b.brand === "LG") return "LG";
+    return "Другие";
+  };
+
+  if (!activeBrand) {
+    return (
+      <div>
+        <p className="text-gray-500 mb-8">Выберите бренд для просмотра каталога:</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl">
+          {BRANDS.map((brand) => {
+            const count = boards.filter((b) => getBrandForBoard(b) === brand.key).length;
+            return (
+              <button
+                key={brand.key}
+                onClick={() => setActiveBrand(brand.key)}
+                className={`bg-gradient-to-br ${brand.color} text-white rounded-2xl p-8 text-center hover:scale-105 transition-transform shadow-md`}
+              >
+                <div className="text-3xl font-bold mb-2">{brand.label}</div>
+                <div className="text-white/70 text-sm">{count} позиций</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
   const filtered = boards.filter((b) => {
+    const matchBrand = getBrandForBoard(b) === activeBrand;
     const matchSearch =
       search === "" ||
       b.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -27,11 +65,34 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
       b.description?.toLowerCase().includes(search.toLowerCase());
     const matchCat = activeCategory === "Все" || b.category === activeCategory;
     const matchStock = !inStockOnly || b.inStock;
-    return matchSearch && matchCat && matchStock;
+    return matchBrand && matchSearch && matchCat && matchStock;
   });
 
   return (
     <div>
+      {/* Brand tabs */}
+      <div className="flex gap-3 mb-6 flex-wrap items-center">
+        {BRANDS.map((brand) => (
+          <button
+            key={brand.key}
+            onClick={() => { setActiveBrand(brand.key); setActiveCategory("Все"); setSearch(""); }}
+            className={`px-5 py-2 rounded-full font-semibold text-sm transition-colors ${
+              activeBrand === brand.key
+                ? "bg-primary-800 text-white"
+                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+            }`}
+          >
+            {brand.label}
+          </button>
+        ))}
+        <button
+          onClick={() => { setActiveBrand(null); setActiveCategory("Все"); setSearch(""); }}
+          className="ml-auto text-sm text-gray-400 hover:text-gray-600 underline"
+        >
+          ← Все бренды
+        </button>
+      </div>
+
       {/* Filters */}
       <div className="bg-white rounded-2xl shadow-sm p-5 mb-6 flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
@@ -89,7 +150,6 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {filtered.map((board) => (
             <div key={board.id} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden">
-              {/* Image placeholder */}
               <div className="h-36 bg-gradient-to-br from-primary-100 to-blue-50 flex items-center justify-center">
                 {board.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
