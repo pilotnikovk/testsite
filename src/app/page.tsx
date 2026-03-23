@@ -71,7 +71,7 @@ export default async function HomePage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-gradient-to-br from-primary-800 to-primary-900 text-white py-20 md:py-28">
+        <section className="bg-primary-900/80 text-white py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               {s.hero_title || "Ремонт телевизоров и бытовой техники"}
@@ -107,7 +107,7 @@ export default async function HomePage() {
         </section>
 
         {/* Services */}
-        <section id="services" className="py-20 bg-gray-50">
+        <section id="services" className="py-20 bg-white/75">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title">Наши услуги</h2>
             <p className="section-subtitle">Ремонтирую все виды бытовой техники ведущих производителей</p>
@@ -126,7 +126,7 @@ export default async function HomePage() {
         </section>
 
         {/* Advantages */}
-        <section className="py-20 bg-primary-800 text-white">
+        <section className="py-20 bg-primary-800/80 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title !text-white">Почему выбирают нас</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
@@ -142,7 +142,7 @@ export default async function HomePage() {
         </section>
 
         {/* How it works */}
-        <section id="how" className="py-20 bg-white">
+        <section id="how" className="py-20 bg-white/75">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title">Как мы работаем</h2>
             <p className="section-subtitle">Простой процесс от заявки до получения исправной техники</p>
@@ -164,7 +164,7 @@ export default async function HomePage() {
         </section>
 
         {/* About */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-white/75">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="section-title">О нас</h2>
@@ -176,7 +176,7 @@ export default async function HomePage() {
         </section>
 
         {/* Contacts */}
-        <section id="contacts" className="py-20 bg-primary-800 text-white">
+        <section id="contacts" className="py-20 bg-primary-800/80 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title !text-white">Контакты</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
