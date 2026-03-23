@@ -89,19 +89,15 @@ export default async function HomePage() {
               <a href="#contacts" className="btn-outline text-lg">Узнать стоимость</a>
             </div>
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto">
+            <div className="flex justify-center gap-16 mt-16">
               <div>
                 <div className="text-4xl font-bold text-accent-500">15K+</div>
                 <div className="text-blue-200 text-sm mt-1">ремонтов выполнено</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-accent-500">14</div>
+                <div className="text-4xl font-bold text-accent-500">20</div>
                 <div className="text-blue-200 text-sm mt-1">лет на рынке</div>
               </div>
-              {/* <div>
-                <div className="text-4xl font-bold text-accent-500">12</div>
-                <div className="text-blue-200 text-sm mt-1">месяцев гарантии</div>
-              </div> */}
             </div>
           </div>
         </section>
