@@ -107,7 +107,7 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title">Наши услуги</h2>
             <p className="section-subtitle">Ремонтирую все виды бытовой техники ведущих производителей</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
               {services.map((service) => (
                 <div key={service.id} className="card group">
                   <div className="text-accent-500 mb-4 group-hover:scale-110 transition-transform duration-200 w-fit">
