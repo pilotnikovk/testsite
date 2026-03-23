@@ -6,8 +6,8 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "РемонтТехники — ремонт телевизоров и бытовой техники",
-  description: "Профессиональный ремонт телевизоров, стиральных машин, холодильников и другой техники. Быстро, качественно, с гарантией.",
+  title: "РемонтТехники33 — ремонт телевизоров и бытовой техники",
+  description: "Профессиональный ремонт жк телевизоров и микроволновых печей в г. Ковров",
   icons: {
     icon: "/images/znak-kachestva.jpg",
   },

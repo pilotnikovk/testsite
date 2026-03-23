@@ -77,7 +77,7 @@ export default async function HomePage() {
               {s.hero_title || "Ремонт телевизоров и бытовой техники"}
             </h1>
             <p className="text-xl md:text-2xl text-blue-200 mb-10 max-w-3xl mx-auto">
-              {s.hero_subtitle || "Быстро, качественно, с гарантией до 12 месяцев"}
+              {s.hero_subtitle || "Быстро, качественно, с гарантией. Пенсионерам и инвалидам скидка 10%."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href={`tel:${s.phone}`} className="btn-primary text-lg">

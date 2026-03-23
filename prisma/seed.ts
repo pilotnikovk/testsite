@@ -25,7 +25,7 @@ async function main() {
   // Default settings
   const defaults: { key: string; value: string }[] = [
     { key: "site_name", value: "РемонтТехники" },
-    { key: "phone", value: "+7 (999) 123-45-67" },
+    { key: "phone", value: "+7 915 775 9756" },
     { key: "address", value: "г. Москва, ул. Примерная, д. 1" },
     { key: "email", value: "info@remont.local" },
     { key: "work_hours", value: "Пн–Пт: 9:00–20:00, Сб: 10:00–18:00" },
