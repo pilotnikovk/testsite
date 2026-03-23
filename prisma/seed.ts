@@ -38,20 +38,14 @@ async function main() {
     await prisma.setting.upsert({ where: { key: s.key }, update: {}, create: s });
   }
 
-  // Default services
+  // Sync services — always replace to keep in sync with this list
   const services = [
     { title: "Ремонт телевизоров", description: "Любые марки: Samsung, LG, Sony, Philips и др. Диагностика бесплатно.", icon: "tv", sortOrder: 1 },
-    { title: "Ремонт стиральных машин", description: "Замена подшипников, ТЭН, насосов. Выезд на дом.", icon: "washing", sortOrder: 2 },
-    { title: "Ремонт холодильников", description: "Заправка фреоном, замена компрессора, устранение утечек.", icon: "fridge", sortOrder: 3 },
-    { title: "Ремонт микроволновок", description: "Замена магнетрона, конденсаторов, трансформаторов.", icon: "microwave", sortOrder: 4 },
-    { title: "Ремонт посудомоечных машин", description: "Устранение течи, замена помпы, ремонт электроники.", icon: "dishwasher", sortOrder: 5 },
-    { title: "Ремонт кондиционеров", description: "Заправка, чистка, замена плат управления.", icon: "ac", sortOrder: 6 },
+    { title: "Ремонт микроволновок", description: "Замена магнетрона, конденсаторов, трансформаторов.", icon: "microwave", sortOrder: 2 },
   ];
 
-  const existingServices = await prisma.service.count();
-  if (existingServices === 0) {
-    await prisma.service.createMany({ data: services });
-  }
+  await prisma.service.deleteMany();
+  await prisma.service.createMany({ data: services });
 
   // Sample boards
   const categories = ["Телевизоры", "Стиральные машины", "Холодильники", "Микроволновки"];
