@@ -25,12 +25,12 @@ async function main() {
   // Default settings
   const defaults: { key: string; value: string }[] = [
     { key: "site_name", value: "РемонтТехники" },
-    { key: "phone", value: "+7 915 775 9756" },
+    { key: "phone", value: "+7 (915) 775-9756" },
     { key: "address", value: "г. Москва, ул. Примерная, д. 1" },
     { key: "email", value: "info@remont.local" },
     { key: "work_hours", value: "Пн–Пт: 9:00–20:00, Сб: 10:00–18:00" },
     { key: "hero_title", value: "Профессиональный ремонт телевизоров и бытовой техники" },
-    { key: "hero_subtitle", value: "Быстро, качественно, с гарантией до 12 месяцев" },
+    { key: "hero_subtitle", value: "Быстро, качественно, с гарантией. Скидка пенсионерам и инвалидам 10%" },
     { key: "about_text", value: "Мы занимаемся ремонтом электроники с 2010 года. За это время отремонтировали более 15 000 единиц техники. Наши мастера имеют высокую квалификацию и постоянно повышают знания." },
   ];
 
