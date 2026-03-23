@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" }
 export const metadata: Metadata = {
   title: "РемонтТехники — ремонт телевизоров и бытовой техники",
   description: "Профессиональный ремонт телевизоров, стиральных машин, холодильников и другой техники. Быстро, качественно, с гарантией.",
+  icons: {
+    icon: "/images/СССР-знак качества.jpg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

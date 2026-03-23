@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -9,15 +10,19 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="bg-primary-800 text-white sticky top-0 z-50 shadow-lg">
+    <header className="text-white sticky top-0 z-50 shadow-lg" style={{ backgroundImage: "url('/images/header-background.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            <svg className="w-8 h-8 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <span>РемонтТехники</span>
+            <Image
+              src="/images/СССР-знак качества.jpg"
+              alt="Знак качества"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+            <span>Ремонт ЖК телевизоров г.Ковров</span>
           </Link>
 
           {/* Desktop nav */}
@@ -25,7 +30,7 @@ export default function Header() {
             <Link href="/#services" className="hover:text-accent-400 transition-colors">Услуги</Link>
             <Link href="/#how" className="hover:text-accent-400 transition-colors">Как работаем</Link>
             <Link href="/#contacts" className="hover:text-accent-400 transition-colors">Контакты</Link>
-            <Link href="/catalog" className="hover:text-accent-400 transition-colors">Каталог плат</Link>
+            <Link href="/catalog" className="hover:text-accent-400 transition-colors">Каталог плат и блоков</Link>
           </nav>
 
           {/* Auth */}
