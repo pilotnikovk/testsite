@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type User = { id: number; email: string; name: string | null; role: string; approved: boolean; createdAt: Date };
-type Board = { id: number; name: string; model: string; category: string; price: number | null; inStock: boolean; description: string | null; imageUrl: string | null };
+type Board = { id: number; name: string; model: string; brand: string; category: string; price: number | null; inStock: boolean; description: string | null; imageUrl: string | null };
 type Settings = Record<string, string>;
 
 const TABS = [
@@ -126,6 +126,7 @@ function BoardsTab({ boards, onRefresh }: { boards: Board[]; onRefresh: () => vo
               <tr>
                 <th className="text-left px-4 py-3 text-gray-500 font-medium">Название</th>
                 <th className="text-left px-4 py-3 text-gray-500 font-medium">Артикул</th>
+                <th className="text-left px-4 py-3 text-gray-500 font-medium">Бренд</th>
                 <th className="text-left px-4 py-3 text-gray-500 font-medium">Категория</th>
                 <th className="text-left px-4 py-3 text-gray-500 font-medium">Цена</th>
                 <th className="text-left px-4 py-3 text-gray-500 font-medium">Наличие</th>
@@ -137,6 +138,7 @@ function BoardsTab({ boards, onRefresh }: { boards: Board[]; onRefresh: () => vo
                 <tr key={b.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3 font-medium text-primary-800">{b.name}</td>
                   <td className="px-4 py-3 font-mono text-gray-500">{b.model}</td>
+                  <td className="px-4 py-3 text-gray-500">{b.brand || "—"}</td>
                   <td className="px-4 py-3 text-gray-500">{b.category}</td>
                   <td className="px-4 py-3 text-accent-600 font-semibold">
                     {b.price ? `${b.price.toLocaleString("ru-RU")} ₽` : "—"}
@@ -176,6 +178,7 @@ function BoardForm({ board, onClose, onSaved }: { board: Board | null; onClose: 
   const [form, setForm] = useState({
     name: board?.name || "",
     model: board?.model || "",
+    brand: board?.brand || "",
     category: board?.category || "",
     price: board?.price?.toString() || "",
     description: board?.description || "",
@@ -214,6 +217,19 @@ function BoardForm({ board, onClose, onSaved }: { board: Board | null; onClose: 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Название" value={form.name} onChange={(v) => set("name", v)} required />
         <Field label="Артикул (модель)" value={form.model} onChange={(v) => set("model", v)} required />
+        <div>
+          <label className="block text-xs font-medium text-gray-600 mb-1">Бренд</label>
+          <select
+            value={form.brand}
+            onChange={(e) => set("brand", e.target.value)}
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500"
+          >
+            <option value="">— Выберите бренд —</option>
+            <option value="Samsung">Samsung</option>
+            <option value="LG">LG</option>
+            <option value="Другие">Другие</option>
+          </select>
+        </div>
         <Field label="Категория" value={form.category} onChange={(v) => set("category", v)} required placeholder="Телевизоры" />
         <Field label="Цена (₽)" value={form.price} onChange={(v) => set("price", v)} type="number" placeholder="2500" />
         <div className="sm:col-span-2">

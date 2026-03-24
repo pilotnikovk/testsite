@@ -28,6 +28,7 @@ export async function POST(req: Request) {
     data: {
       name: data.name,
       model: data.model,
+      brand: data.brand || "",
       category: data.category,
       price: data.price ?? null,
       description: data.description || null,
