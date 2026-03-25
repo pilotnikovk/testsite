@@ -10,6 +10,7 @@ type Board = {
   price: number | null;
   category: string;
   brand: string;
+  compatibleModels: string;
   imageUrl: string | null;
   inStock: boolean;
   createdAt: Date;
@@ -26,6 +27,7 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("Все");
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
 
   const getBrandForBoard = (b: Board) => {
     if (b.brand === "Samsung") return "Samsung";
@@ -149,7 +151,11 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {filtered.map((board) => (
-            <div key={board.id} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden">
+            <div
+              key={board.id}
+              onClick={() => setSelectedBoard(board)}
+              className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden cursor-pointer"
+            >
               <div className="h-36 bg-gradient-to-br from-primary-100 to-blue-50 flex items-center justify-center">
                 {board.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -182,6 +188,86 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Modal */}
+      {selectedBoard && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          onClick={() => setSelectedBoard(null)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Image */}
+            <div className="h-48 bg-gradient-to-br from-primary-100 to-blue-50 flex items-center justify-center rounded-t-2xl">
+              {selectedBoard.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={selectedBoard.imageUrl} alt={selectedBoard.name} className="h-full w-full object-cover rounded-t-2xl" />
+              ) : (
+                <svg className="w-16 h-16 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+                </svg>
+              )}
+            </div>
+
+            <div className="p-6">
+              {/* Header */}
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <h2 className="text-xl font-bold text-primary-800">{selectedBoard.name}</h2>
+                  <p className="text-sm text-gray-400 font-mono mt-0.5">{selectedBoard.model}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedBoard(null)}
+                  className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className={`text-xs px-3 py-1 rounded-full font-medium ${selectedBoard.inStock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
+                  {selectedBoard.inStock ? "В наличии" : "Нет в наличии"}
+                </span>
+                {selectedBoard.brand && (
+                  <span className="text-xs px-3 py-1 rounded-full bg-blue-50 text-primary-700 font-medium">{selectedBoard.brand}</span>
+                )}
+                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-600">{selectedBoard.category}</span>
+              </div>
+
+              {/* Description */}
+              {selectedBoard.description && (
+                <p className="text-sm text-gray-600 leading-relaxed mb-4">{selectedBoard.description}</p>
+              )}
+
+              {/* Compatible models */}
+              {selectedBoard.compatibleModels && (
+                <div className="mb-4">
+                  <h3 className="text-sm font-semibold text-primary-800 mb-2">Совместимые модели:</h3>
+                  <ul className="space-y-1">
+                    {selectedBoard.compatibleModels.split("\n").filter(Boolean).map((m, i) => (
+                      <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent-500 shrink-0" />
+                        {m.trim()}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Price */}
+              {selectedBoard.price && (
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <span className="text-gray-500 text-sm">Цена:</span>
+                  <span className="text-2xl font-bold text-accent-500">{selectedBoard.price.toLocaleString("ru-RU")} ₽</span>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

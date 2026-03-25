@@ -21,6 +21,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       name: data.name,
       model: data.model,
       brand: data.brand || "",
+      compatibleModels: data.compatibleModels || "",
       category: data.category,
       price: data.price ?? null,
       description: data.description || null,
