@@ -7,9 +7,11 @@ import Link from "next/link";
 type User = { id: number; email: string; name: string | null; role: string; approved: boolean; createdAt: Date };
 type Board = { id: number; name: string; model: string; brand: string; category: string; price: number | null; inStock: boolean; description: string | null; compatibleModels: string; imageUrl: string | null };
 type Settings = Record<string, string>;
+type Order = { id: number; boardId: number | null; boardName: string; boardModel: string; clientName: string; clientPhone: string; message: string; status: string; createdAt: Date };
 
 const TABS = [
   { id: "boards", label: "Платы" },
+  { id: "orders", label: "Заявки" },
   { id: "users", label: "Пользователи" },
   { id: "settings", label: "Настройки" },
 ];
@@ -18,10 +20,12 @@ export default function AdminClient({
   users,
   boards,
   settings,
+  orders,
 }: {
   users: User[];
   boards: Board[];
   settings: Settings;
+  orders: Order[];
 }) {
   const router = useRouter();
   const [tab, setTab] = useState("boards");
@@ -44,7 +48,8 @@ export default function AdminClient({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <StatCard label="Всего плат" value={boards.length} icon="📦" />
           <StatCard label="В наличии" value={boards.filter((b) => b.inStock).length} icon="✅" />
-          <StatCard label="Пользователей" value={users.length} icon="👥" />
+          <StatCard label="Заявок" value={orders.length} icon="📋" />
+          <StatCard label="Новых заявок" value={orders.filter((o) => o.status === "new").length} icon="🔔" />
         </div>
 
         {/* Tabs */}
@@ -64,6 +69,7 @@ export default function AdminClient({
 
         {/* Content */}
         {tab === "boards" && <BoardsTab boards={boards} onRefresh={() => router.refresh()} />}
+        {tab === "orders" && <OrdersTab orders={orders} onRefresh={() => router.refresh()} />}
         {tab === "users" && <UsersTab users={users} onRefresh={() => router.refresh()} />}
         {tab === "settings" && <SettingsTab settings={settings} onRefresh={() => router.refresh()} />}
       </div>
@@ -378,6 +384,7 @@ function SettingsTab({ settings, onRefresh }: { settings: Settings; onRefresh: (
   const [form, setForm] = useState(settings);
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
 
   const fields: { key: string; label: string; multiline?: boolean }[] = [
     { key: "site_name", label: "Название сайта" },
@@ -393,15 +400,20 @@ function SettingsTab({ settings, onRefresh }: { settings: Settings; onRefresh: (
   async function handleSave() {
     setLoading(true);
     setSaved(false);
-    await fetch("/api/admin/settings", {
+    setError("");
+    const res = await fetch("/api/admin/settings", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
     setLoading(false);
-    setSaved(true);
-    onRefresh();
-    setTimeout(() => setSaved(false), 3000);
+    if (res.ok) {
+      setSaved(true);
+      onRefresh();
+      setTimeout(() => setSaved(false), 3000);
+    } else {
+      setError(`Ошибка ${res.status} — выйдите и войдите заново`);
+    }
   }
 
   return (
@@ -434,7 +446,108 @@ function SettingsTab({ settings, onRefresh }: { settings: Settings; onRefresh: (
           {loading ? "Сохранение..." : "Сохранить"}
         </button>
         {saved && <span className="text-sm text-green-600 font-medium">✓ Сохранено</span>}
+        {error && <span className="text-sm text-red-600 font-medium">{error}</span>}
       </div>
+    </div>
+  );
+}
+
+// ===================== ORDERS TAB =====================
+const STATUS_LABELS: Record<string, string> = {
+  new: "Новая",
+  in_progress: "В работе",
+  done: "Выполнена",
+  cancelled: "Отменена",
+};
+const STATUS_COLORS: Record<string, string> = {
+  new: "bg-blue-100 text-blue-700",
+  in_progress: "bg-yellow-100 text-yellow-700",
+  done: "bg-green-100 text-green-700",
+  cancelled: "bg-gray-100 text-gray-500",
+};
+const STATUS_NEXT: Record<string, string> = {
+  new: "in_progress",
+  in_progress: "done",
+  done: "new",
+};
+
+function OrdersTab({ orders, onRefresh }: { orders: Order[]; onRefresh: () => void }) {
+  const [loading, setLoading] = useState<number | null>(null);
+
+  async function changeStatus(id: number, status: string) {
+    setLoading(id);
+    await fetch(`/api/admin/orders/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    setLoading(null);
+    onRefresh();
+  }
+
+  async function deleteOrder(id: number) {
+    setLoading(id);
+    await fetch(`/api/admin/orders/${id}`, { method: "DELETE" });
+    setLoading(null);
+    onRefresh();
+  }
+
+  if (orders.length === 0) {
+    return (
+      <div className="bg-white rounded-2xl shadow-sm p-12 text-center text-gray-400">
+        Заявок пока нет
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {orders.map((o) => (
+        <div key={o.id} className="bg-white rounded-2xl shadow-sm p-5 flex flex-col sm:flex-row sm:items-start gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${STATUS_COLORS[o.status] || STATUS_COLORS.new}`}>
+                {STATUS_LABELS[o.status] || o.status}
+              </span>
+              <span className="text-xs text-gray-400">
+                {new Date(o.createdAt).toLocaleString("ru-RU")}
+              </span>
+            </div>
+            <p className="font-semibold text-primary-800 text-sm">{o.boardName} <span className="font-mono font-normal text-gray-400">{o.boardModel}</span></p>
+            <p className="text-sm text-gray-700 mt-1">
+              <span className="font-medium">{o.clientName}</span> — {o.clientPhone}
+            </p>
+            {o.message && (
+              <p className="text-sm text-gray-500 mt-1 italic">"{o.message}"</p>
+            )}
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            {o.status !== "cancelled" && (
+              <button
+                disabled={loading === o.id}
+                onClick={() => changeStatus(o.id, STATUS_NEXT[o.status] || "new")}
+                className="text-xs bg-primary-800 text-white px-3 py-1.5 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+              >
+                {loading === o.id ? "..." : `→ ${STATUS_LABELS[STATUS_NEXT[o.status]]}`}
+              </button>
+            )}
+            <button
+              disabled={loading === o.id}
+              onClick={() => changeStatus(o.id, "cancelled")}
+              className="text-xs text-gray-400 hover:text-red-500 underline transition-colors disabled:opacity-50"
+            >
+              Отменить
+            </button>
+            <button
+              disabled={loading === o.id}
+              onClick={() => deleteOrder(o.id)}
+              className="text-xs text-red-400 hover:text-red-600 underline transition-colors disabled:opacity-50"
+            >
+              Удалить
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

@@ -28,6 +28,7 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
   const [activeCategory, setActiveCategory] = useState("Все");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
+  const [orderBoard, setOrderBoard] = useState<Board | null>(null);
 
   const getBrandForBoard = (b: Board) => {
     if (b.brand === "Samsung") return "Samsung";
@@ -177,7 +178,7 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
                 </div>
                 <p className="text-xs text-gray-400 font-mono mb-2">{board.model}</p>
                 <p className="text-xs text-gray-500 leading-relaxed mb-3 line-clamp-2">{board.description}</p>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-3">
                   <span className="text-xs bg-blue-50 text-primary-700 px-2 py-1 rounded-lg">{board.category}</span>
                   {board.price && (
                     <span className="font-bold text-accent-500 text-sm">
@@ -185,6 +186,12 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
                     </span>
                   )}
                 </div>
+                <button
+                  onClick={(e) => { e.stopPropagation(); setOrderBoard(board); }}
+                  className="w-full text-xs bg-accent-500 hover:bg-accent-600 text-white font-medium py-2 rounded-lg transition-colors"
+                >
+                  Оставить заявку
+                </button>
               </div>
             </div>
           ))}
@@ -261,15 +268,120 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
 
               {/* Price */}
               {selectedBoard.price && (
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100 mb-4">
                   <span className="text-gray-500 text-sm">Цена:</span>
                   <span className="text-2xl font-bold text-accent-500">{selectedBoard.price.toLocaleString("ru-RU")} ₽</span>
                 </div>
               )}
+
+              <button
+                onClick={() => { setOrderBoard(selectedBoard); setSelectedBoard(null); }}
+                className="w-full bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 rounded-xl transition-colors"
+              >
+                Оставить заявку
+              </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Order form modal */}
+      {orderBoard && (
+        <OrderModal board={orderBoard} onClose={() => setOrderBoard(null)} />
+      )}
+    </div>
+  );
+}
+
+function OrderModal({ board, onClose }: { board: Board; onClose: () => void }) {
+  const [form, setForm] = useState({ clientName: "", clientPhone: "", message: "" });
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    const res = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        boardId: board.id,
+        boardName: board.name,
+        boardModel: board.model,
+        ...form,
+      }),
+    });
+    setLoading(false);
+    if (res.ok) setSent(true);
+    else setError("Ошибка при отправке. Попробуйте позже.");
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+        <div className="p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h2 className="text-lg font-bold text-primary-800">Оставить заявку</h2>
+              <p className="text-sm text-gray-400 mt-0.5">{board.name} — {board.model}</p>
+            </div>
+            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors">✕</button>
+          </div>
+
+          {sent ? (
+            <div className="text-center py-8">
+              <div className="text-4xl mb-3">✅</div>
+              <p className="font-semibold text-primary-800 text-lg">Заявка отправлена!</p>
+              <p className="text-sm text-gray-500 mt-1">Мы свяжемся с вами в ближайшее время.</p>
+              <button onClick={onClose} className="mt-6 btn-primary text-sm py-2 px-6">Закрыть</button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Ваше имя *</label>
+                <input
+                  required
+                  value={form.clientName}
+                  onChange={(e) => setForm((f) => ({ ...f, clientName: e.target.value }))}
+                  placeholder="Иван Иванов"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Телефон *</label>
+                <input
+                  required
+                  type="tel"
+                  value={form.clientPhone}
+                  onChange={(e) => setForm((f) => ({ ...f, clientPhone: e.target.value }))}
+                  placeholder="+7 (999) 000-00-00"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Комментарий</label>
+                <textarea
+                  value={form.message}
+                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+                  rows={3}
+                  placeholder="Дополнительная информация..."
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 resize-none"
+                />
+              </div>
+              {error && <p className="text-red-600 text-sm">{error}</p>}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-accent-500 hover:bg-accent-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors"
+              >
+                {loading ? "Отправка..." : "Отправить заявку"}
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
