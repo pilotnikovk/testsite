@@ -72,45 +72,31 @@ export default async function HomePage() {
       <main>
         {/* Hero */}
         <section className="bg-primary-900/50 text-white py-20 md:py-28">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row items-center gap-12">
-              {/* Text */}
-              <div className="flex-1 text-center lg:text-left">
-                <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                  {s.hero_title || "Ремонт телевизоров и бытовой техники"}
-                </h1>
-                <p className="text-xl md:text-2xl text-blue-200 mb-10 max-w-3xl">
-                  {s.hero_subtitle || "Быстро, качественно, с гарантией. Пенсионерам и инвалидам скидка 10%."}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <a href={`tel:${s.phone}`} className="btn-primary text-lg">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    {s.phone}
-                  </a>
-                  <a href="#contacts" className="btn-outline text-lg">Узнать стоимость</a>
-                </div>
-                {/* Stats */}
-                <div className="flex justify-center lg:justify-start gap-16 mt-12">
-                  <div>
-                    <div className="text-4xl font-bold text-accent-500">15K+</div>
-                    <div className="text-blue-200 text-sm mt-1">ремонтов выполнено</div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold text-accent-500">20</div>
-                    <div className="text-blue-200 text-sm mt-1">лет на рынке</div>
-                  </div>
-                </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+              {s.hero_title || "Ремонт телевизоров и бытовой техники"}
+            </h1>
+            <p className="text-xl md:text-2xl text-blue-200 mb-10 max-w-3xl mx-auto">
+              {s.hero_subtitle || "Быстро, качественно, с гарантией. Пенсионерам и инвалидам скидка 10%."}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href={`tel:${s.phone}`} className="btn-primary text-lg">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                {s.phone}
+              </a>
+              <a href="#contacts" className="btn-outline text-lg">Узнать стоимость</a>
+            </div>
+            {/* Stats */}
+            <div className="flex justify-center gap-16 mt-16">
+              <div>
+                <div className="text-4xl font-bold text-accent-500">15K+</div>
+                <div className="text-blue-200 text-sm mt-1">ремонтов выполнено</div>
               </div>
-              {/* Photo */}
-              <div className="flex-shrink-0 lg:w-[420px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/images/main-photo.png"
-                  alt="Ремонт техники"
-                  className="w-full rounded-2xl shadow-2xl object-cover"
-                />
+              <div>
+                <div className="text-4xl font-bold text-accent-500">20</div>
+                <div className="text-blue-200 text-sm mt-1">лет на рынке</div>
               </div>
             </div>
           </div>
