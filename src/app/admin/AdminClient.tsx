@@ -7,7 +7,7 @@ import Link from "next/link";
 type User = { id: number; email: string; name: string | null; role: string; approved: boolean; createdAt: Date };
 type Board = { id: number; name: string; model: string; brand: string; category: string; price: number | null; inStock: boolean; description: string | null; compatibleModels: string; imageUrl: string | null };
 type Settings = Record<string, string>;
-type Order = { id: number; boardId: number | null; boardName: string; boardModel: string; clientName: string; clientPhone: string; message: string; status: string; createdAt: Date };
+type Order = { id: number; boardId: number | null; boardName: string; boardModel: string; clientName: string; clientPhone: string; clientEmail: string; message: string; status: string; createdAt: Date };
 
 const TABS = [
   { id: "boards", label: "Платы" },
@@ -516,6 +516,7 @@ function OrdersTab({ orders, onRefresh }: { orders: Order[]; onRefresh: () => vo
             <p className="font-semibold text-primary-800 text-sm">{o.boardName} <span className="font-mono font-normal text-gray-400">{o.boardModel}</span></p>
             <p className="text-sm text-gray-700 mt-1">
               <span className="font-medium">{o.clientName}</span> — {o.clientPhone}
+              {o.clientEmail && <span className="text-gray-400"> — {o.clientEmail}</span>}
             </p>
             {o.message && (
               <p className="text-sm text-gray-500 mt-1 italic">"{o.message}"</p>

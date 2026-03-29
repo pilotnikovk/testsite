@@ -294,7 +294,7 @@ export default function CatalogClient({ boards, categories }: { boards: Board[];
 }
 
 function OrderModal({ board, onClose }: { board: Board; onClose: () => void }) {
-  const [form, setForm] = useState({ clientName: "", clientPhone: "", message: "" });
+  const [form, setForm] = useState({ clientName: "", clientPhone: "", clientEmail: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
@@ -357,6 +357,16 @@ function OrderModal({ board, onClose }: { board: Board; onClose: () => void }) {
                   value={form.clientPhone}
                   onChange={(e) => setForm((f) => ({ ...f, clientPhone: e.target.value }))}
                   placeholder="+7 (999) 000-00-00"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">Email</label>
+                <input
+                  type="email"
+                  value={form.clientEmail}
+                  onChange={(e) => setForm((f) => ({ ...f, clientEmail: e.target.value }))}
+                  placeholder="example@mail.ru"
                   className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500"
                 />
               </div>

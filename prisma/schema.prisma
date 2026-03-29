@@ -53,6 +53,7 @@ model Order {
   boardModel  String
   clientName  String
   clientPhone String
+  clientEmail String   @default("")
   message     String   @default("")
   status      String   @default("new")
   createdAt   DateTime @default(now())

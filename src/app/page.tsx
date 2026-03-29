@@ -71,7 +71,7 @@ export default async function HomePage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="bg-primary-900/80 text-white py-20 md:py-28">
+        <section className="bg-primary-900/50 text-white py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               {s.hero_title || "Ремонт телевизоров и бытовой техники"}
@@ -122,7 +122,7 @@ export default async function HomePage() {
         </section>
 
         {/* Advantages */}
-        <section className="py-20 bg-primary-800/80 text-white">
+        <section className="py-20 bg-primary-800/50 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title !text-white">Почему выбирают нас</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
@@ -172,7 +172,7 @@ export default async function HomePage() {
         </section>
 
         {/* Contacts */}
-        <section id="contacts" className="py-20 bg-primary-800/80 text-white">
+        <section id="contacts" className="py-20 bg-primary-800/50 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title !text-white">Контакты</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">

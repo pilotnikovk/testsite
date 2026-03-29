@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 
 export async function POST(req: Request) {
-  const { boardId, boardName, boardModel, clientName, clientPhone, message } = await req.json();
+  const { boardId, boardName, boardModel, clientName, clientPhone, clientEmail, message } = await req.json();
 
   if (!boardName || !clientName || !clientPhone) {
     return NextResponse.json({ error: "Заполните обязательные поля" }, { status: 400 });
@@ -16,6 +16,7 @@ export async function POST(req: Request) {
       boardModel: boardModel || "",
       clientName,
       clientPhone,
+      clientEmail: clientEmail || "",
       message: message || "",
     },
   });
@@ -34,7 +35,8 @@ export async function POST(req: Request) {
             <tr><td style="padding:8px;color:#666">Плата:</td><td style="padding:8px;font-weight:bold">${boardName} ${boardModel}</td></tr>
             <tr style="background:#f9f9f9"><td style="padding:8px;color:#666">Клиент:</td><td style="padding:8px;font-weight:bold">${clientName}</td></tr>
             <tr><td style="padding:8px;color:#666">Телефон:</td><td style="padding:8px;font-weight:bold">${clientPhone}</td></tr>
-            ${message ? `<tr style="background:#f9f9f9"><td style="padding:8px;color:#666">Комментарий:</td><td style="padding:8px">${message}</td></tr>` : ""}
+            ${clientEmail ? `<tr style="background:#f9f9f9"><td style="padding:8px;color:#666">Email:</td><td style="padding:8px">${clientEmail}</td></tr>` : ""}
+            ${message ? `<tr><td style="padding:8px;color:#666">Комментарий:</td><td style="padding:8px">${message}</td></tr>` : ""}
           </table>
           <p style="margin-top:16px;color:#888;font-size:12px">Дата: ${new Date(order.createdAt).toLocaleString("ru-RU")}</p>
         `,
