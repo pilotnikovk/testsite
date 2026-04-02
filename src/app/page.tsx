@@ -217,7 +217,7 @@ export default async function HomePage() {
             {/* Карта Яндекса — под блоками */}
             <div className="mt-10 rounded-xl overflow-hidden border border-white/20 shadow-lg">
               <iframe 
-                src="https://yandex.ru/map-widget/v1/?ll=41.3842,56.3615&z=16&pt=41.3842,56.3615"
+                src="https://yandex.ru/map-widget/v1/?ll=41.31899,56.35898&z=17&pt=41.31899,56.35898"
                 width="100%" 
                 height="280" 
                 frameBorder="0"
