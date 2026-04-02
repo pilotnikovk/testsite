@@ -171,10 +171,12 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Контакты - полная секция */}
+        {/* Контакты */}
         <section id="contacts" className="py-20 bg-primary-800/50 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="section-title !text-white">Контакты</h2>
+            
+            {/* Три блока: Телефон, Адрес, Режим работы */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
               
               {/* Телефон */}
@@ -197,10 +199,10 @@ export default async function HomePage() {
                   </svg>
                 </div>
                 <h3 className="font-semibold mb-1">Адрес</h3>
-                <p className="text-blue-200">{s.address}</p>
+                <p className="text-blue-200">г. Ковров, ул. Чернышевского, 13</p>
               </div>
 
-              {/* Режим работы + Карта (объединено) */}
+              {/* Режим работы */}
               <div className="text-center p-6 bg-white/10 rounded-2xl">
                 <div className="w-12 h-12 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -208,56 +210,24 @@ export default async function HomePage() {
                   </svg>
                 </div>
                 <h3 className="font-semibold mb-1">Режим работы</h3>
-                <p className="text-blue-200 text-sm mb-4">{s.work_hours}</p>
-                
-                {/* Карта Яндекса */}
-                <div className="mt-3 rounded-lg overflow-hidden h-32 border border-white/20">
-                  <iframe 
-                    src="https://yandex.ru/map-widget/v1/?ll=41.3194,56.3638&z=14&pt=41.3194,56.3638"
-                    width="100%" 
-                    height="100%" 
-                    frameBorder="0"
-                    title="Мастер на карте Коврова"
-                    loading="lazy"
-                  />
-                </div>
+                <p className="text-blue-200 text-sm">{s.work_hours}</p>
               </div>
+            </div>
+
+            {/* Карта Яндекса — под блоками */}
+            <div className="mt-10 rounded-xl overflow-hidden border border-white/20 shadow-lg">
+              <iframe 
+                src="https://yandex.ru/map-widget/v1/?ll=41.3842,56.3615&z=16&pt=41.3842,56.3615"
+                width="100%" 
+                height="280" 
+                frameBorder="0"
+                title="Мастер на карте Коврова, ул. Чернышевского 13"
+                loading="lazy"
+                className="w-full"
+              />
             </div>
           </div>
         </section>
-
-        {/* Schema-разметка для Яндекса */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "Ремонт телевизоров в Коврове",
-              "description": "Частный мастер по ремонту телевизоров и бытовой техники в Коврове. Бесплатная диагностика, выезд на дом, гарантия.",
-              "url": "https://kovrov-remont-tv.ru",
-              "telephone": s.phone,
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": s.address,
-                "addressLocality": "Ковров",
-                "addressRegion": "Владимирская область",
-                "addressCountry": "RU"
-              },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                "opens": "10:00",
-                "closes": "19:00"
-              },
-              "priceRange": "500₽ - 5000₽",
-              "areaServed": {
-                "@type": "City",
-                "name": "Ковров"
-              }
-            })
-          }}
-        />
       </main>
       <Footer />
     </>
