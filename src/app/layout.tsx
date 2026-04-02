@@ -7,7 +7,7 @@ import YandexMetrika from "@/components/YandexMetrika";
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "РемонтТехники33 — ремонт телевизоров и бытовой техники",
+  title: "Ремонт Техники Ковров — ремонт телевизоров и бытовой техники",
   description: "Профессиональный ремонт жк телевизоров и микроволновых печей в г. Ковров",
   icons: {
     icon: "/images/znak-kachestva.jpg",
