@@ -74,7 +74,7 @@ export default async function HomePage() {
         <section className="bg-primary-900/50 text-white py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              {s.hero_title || "Ремонт телевизоров и бытовой техники"}
+              Ремонт телевизоров в Коврове — частный мастер
             </h1>
             <p className="text-xl md:text-2xl text-blue-200 mb-10 max-w-3xl mx-auto">
               {s.hero_subtitle || "Быстро, качественно, с гарантией. Пенсионерам и инвалидам скидка 10%."}
@@ -207,6 +207,32 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "Ремонт телевизоров в Коврове",
+              "image": "https://kovrov-remont-tv.ru/znak-kachestva.jpg",
+              "telephone": s.phone,
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": s.address,
+                "addressLocality": "Ковров",
+                "addressRegion": "Владимирская область",
+                "addressCountry": "RU"
+              },
+              "openingHours": s.work_hours,
+              "priceRange": "₽₽",
+              "areaServed": {
+                "@type": "City",
+                "name": "Ковров"
+              }
+            })
+          }}
+        />
       </main>
       <Footer />
     </>
