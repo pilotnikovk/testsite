@@ -86,7 +86,8 @@ export default async function HomePage() {
         <section className="bg-primary-900/50 text-white py-20 md:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Ремонт телевизоров в Коврове — частный мастер
+              Ремонт телевизоров в Коврове
+              Платы, блоки ТВ - ЖК Samsung, Lg и другие бренды
             </h1>
             <p className="text-xl md:text-2xl text-blue-200 mb-10 max-w-3xl mx-auto">
               {s.hero_subtitle || "Быстро, качественно, с гарантией. Пенсионерам и инвалидам скидка 10%."}
