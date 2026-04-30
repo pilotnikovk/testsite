@@ -138,8 +138,8 @@ export default async function HomePage() {
           <section className="py-20 bg-gradient-to-b from-white to-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-12">
-                <h2 className="section-title">Популярные модели</h2>
-                <p className="section-subtitle">Оригинальные запчасти для вашей техники</p>
+                <h2 className="section-title">Популярные бренды</h2>
+                <p className="section-subtitle">Каталог плат для Вашей техники</p>
               </div>
               
               <CatalogClient boards={featuredBoards} categories={categories} />
