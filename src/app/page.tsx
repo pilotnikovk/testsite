@@ -87,6 +87,8 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               Ремонт телевизоров в Коврове
+            </h1>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               Платы, блоки ТВ - ЖК Samsung, Lg и другие бренды
             </h1>
             <p className="text-xl md:text-2xl text-blue-200 mb-10 max-w-3xl mx-auto">
