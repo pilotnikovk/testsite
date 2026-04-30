@@ -6,21 +6,6 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import CatalogClient from "./catalog/CatalogClient";
 
-// Добавляем тип для товара с главной страницы
-type FeaturedBoard = {
-  id: number;
-  name: string;
-  model: string;
-  description: string | null;
-  price: number | null;
-  category: string;
-  brand: string;
-  compatibleModels: string;
-  imageUrl: string | null;
-  inStock: boolean;
-  createdAt: Date;
-};
-
 async function getData() {
   const [settings, services, featuredBoards] = await Promise.all([
     prisma.setting.findMany(),
@@ -29,19 +14,6 @@ async function getData() {
       where: { inStock: true },
       orderBy: { createdAt: "desc" },
       take: 6,
-      select: {
-        id: true,
-        name: true,
-        model: true,
-        description: true,
-        price: true,
-        category: true,
-        brand: true,
-        compatibleModels: true,
-        imageUrl: true,
-        inStock: true,
-        createdAt: true,
-      },
     }),
   ]);
   
@@ -51,7 +23,7 @@ async function getData() {
   return {
     s: Object.fromEntries(settings.map((x) => [x.key, x.value])),
     services,
-    featuredBoards: featuredBoards as FeaturedBoard[],
+    featuredBoards,
     categories,
   };
 }

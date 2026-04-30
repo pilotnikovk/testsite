@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-type Board = {
+export type Board = {
   id: number;
   name: string;
   model: string;
